@@ -1,0 +1,33 @@
+version: "3"
+services:
+  server:
+    container_name: server
+    build:
+      context: ./server
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./server:/usr/src/connect
+    ports:
+      - "5000:5000"
+    networks:
+      - connect
+
+  client:
+    container_name: client
+    build:
+      context: ./client
+    env_file:
+      - ./client/src/.env
+    volumes:
+      - ./client:/usr/src/connect
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    networks:
+      - connect
+
+networks:
+  connect:
+    driver: bridge

@@ -36,6 +36,7 @@ startMessageConsumer();
 const socketService = new SocketService();
 socketService.io.attach(server, {
 	pingTimeout: 60000,
-	cors: { origin: "http://localhost:3000" },
+	// cors: { origin: "http://localhost:3000" },
+	cors: { origin: process.env.PROD_CLIENT_URL },
 });
 socketService.initListeners();

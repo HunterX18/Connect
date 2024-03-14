@@ -16,6 +16,7 @@ import { getSenderFull, getSender } from "../../utils/getSender";
 import ProfileModal from "../common/ProfileModal";
 import UpdateGroupChatModal from "./UpdateGroupChatModal";
 import ScrollableChat from "./ScrollableChat";
+import serverUrl from "../../utils/baseUrl";
 
 var selectedChatCompare;
 
@@ -42,7 +43,7 @@ const SingleChat = () => {
 	}, [selectedChat]);
 
 	useEffect(() => {
-		socket.current = io("http://localhost:5000");
+		socket.current = io(`${serverUrl}`);
 		socket.current.emit("setup", userInfo);
 		socket.current.on("connected", () => {
 			dispatch({
@@ -119,7 +120,7 @@ const SingleChat = () => {
 				},
 			};
 			const { data } = await axios.get(
-				`http://localhost:5000/api/messages/${selectedChat._id}`,
+				`${serverUrl}/api/messages/${selectedChat._id}`,
 				config
 			);
 			// console.log(data);

@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { StateContext } from "../context/StateContext";
 import SideDrawer from "../components/common/SideDrawer";
 import MyChats from "../components/common/MyChats";

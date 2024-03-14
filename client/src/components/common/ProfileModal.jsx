@@ -13,8 +13,6 @@ import {
 	Button,
 	Image,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
-import { StateContext } from "../../context/StateContext";
 
 const ProfileModal = ({ userInfo, children }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();

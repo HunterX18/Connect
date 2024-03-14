@@ -6,6 +6,7 @@ import axios from "axios";
 import ChatLoading from "./ChatLoading.jsx";
 import GroupChatModal from "./GroupChatModal.jsx";
 import { getSender } from "../../utils/getSender.js";
+import serverUrl from "../../utils/baseUrl.js";
 
 const MyChats = () => {
 	const {
@@ -14,19 +15,18 @@ const MyChats = () => {
 	} = useContext(StateContext);
 
 	const [loggedUser, setLoggedUser] = useState();
+	const [loading, setLoading] = useState(false);
 	const toast = useToast();
 
 	const fetchChats = async () => {
+		setLoading(true);
 		try {
 			const config = {
 				headers: {
 					Authorization: `Bearer ${userInfo.token}`,
 				},
 			};
-			const { data } = await axios.get(
-				"http://localhost:5000/api/chats",
-				config
-			);
+			const { data } = await axios.get(`${serverUrl}/api/chats`, config);
 			// console.log(data);
 			dispatch({
 				type: "SET_CHATS",
@@ -42,6 +42,7 @@ const MyChats = () => {
 				position: "bottom-left",
 			});
 		}
+			setLoading(false);
 	};
 
 	useEffect(() => {
@@ -91,7 +92,7 @@ const MyChats = () => {
 				borderRadius="lg"
 				overflowY="hidden"
 			>
-				{chats ? (
+				{!loading ? (
 					<Stack overflowY="scroll">
 						{chats.map((chat) => (
 							<Box

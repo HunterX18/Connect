@@ -2,13 +2,12 @@ import React, { useContext } from "react";
 import ScrollableFeed from "react-scrollable-feed";
 import isSameSender from "../../utils/isSameSender";
 import isLastMessage from "../../utils/isLastMessage";
-import { Avatar, Box, Tooltip } from "@chakra-ui/react";
+import { Avatar, Tooltip } from "@chakra-ui/react";
 import { StateContext } from "../../context/StateContext";
 
 const ScrollableChat = ({ messages }) => {
 	const {
 		state: { userInfo },
-		dispatch,
 	} = useContext(StateContext);
 
 

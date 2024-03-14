@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "./UserListItem";
 import { getSender } from "../../utils/getSender";
+import serverUrl from "../../utils/baseUrl";
 
 const SideDrawer = () => {
 	const [search, setSearch] = useState("");
@@ -74,7 +75,7 @@ const SideDrawer = () => {
 				},
 			};
 			const { data } = await axios.get(
-				`http://localhost:5000/api/user?search=${search}`,
+				`${serverUrl}/api/user?search=${search}`,
 				config
 			);
 
@@ -108,7 +109,7 @@ const SideDrawer = () => {
 				},
 			};
 			const { data } = await axios.post(
-				"http://localhost:5000/api/chats",
+				`${serverUrl}/api/chats`,
 				{ userId },
 				config
 			);

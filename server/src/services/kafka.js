@@ -1,9 +1,12 @@
 import { Kafka, Partitioners } from "kafkajs";
+import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 import Message from "../models/MessageModel.js";
 import User from "../models/UserModel.js";
 import Chat from "../models/ChatModel.js";
+
+dotenv.config();
 
 const kafka = new Kafka({
 	brokers: [process.env.KAFKA_BROKER],

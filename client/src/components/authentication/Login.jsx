@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import serverUrl from "../../utils/baseUrl";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -45,7 +46,7 @@ const Login = () => {
 				},
 			};
 			const { data } = await axios.post(
-				"http://localhost:5000/api/user/login",
+				`${serverUrl}/api/user/login`,
 				{ email, password },
 				config
 			);
