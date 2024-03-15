@@ -1,0 +1,38 @@
+name: Build and Push to Dockerhub
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+  environment:
+    name: build
+
+  env:
+    JWT_SECRET: ${ { secrets.JWT_SECRET } }
+    KAFKA_BROKER: ${ { secrets.KAFKA_BROKER } }
+    KAFKA_PASSWORD: ${ { secrets.KAFKA_PASSWORD } }
+    KAFKA_USERNAME: ${ { secrets.KAFKA_USERNAME } }
+    MONGO_URI: ${ { secrets.MONGO_URI } }
+    PROD_CLIENT_URL: ${ { secrets.PROD_CLIENT_URL } }
+    REACT_APP_CLOUDINARY_API: ${ { secrets.REACT_APP_CLOUDINARY_API } }
+    REACT_APP_CLOUD_NAME: ${ { secrets.REACT_APP_CLOUD_NAME } }
+    REACT_APP_UPLOAD_PRESET: ${ { secrets.REACT_APP_UPLOAD_PRESET } }
+    REDIS_HOST: ${ { secrets.REDIS_HOST } }
+    REDIS_PASSWORD: ${ { secrets.REDIS_PASSWORD } }
+    REDIS_USERNAME: ${ { secrets.REDIS_USERNAME } }
+
+  steps:
+    - name: pulling git repo
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20.10.0"
+
+    - name: install client
+      working-directory: ./client
+      run: npm install
+
+    - name: install server
+      working-directory: ./server
+      run: npm install
