@@ -2,12 +2,15 @@ version: "3"
 services:
   server:
     container_name: server
-    build:
-      context: ./server
+    # build:
+    #   context: ./server
+    # env_file:
+    #   - ./server/.env
+    # volumes:
+    #   - ./server:/usr/src/connect
+    image: dockerx2000/connect_server
     env_file:
       - ./server/.env
-    volumes:
-      - ./server:/usr/src/connect
     ports:
       - "5000:5000"
     networks:
@@ -15,12 +18,13 @@ services:
 
   client:
     container_name: client
-    build:
-      context: ./client
+    # build:
+    #   context: ./client
+    # volumes:
+    #   - ./client:/usr/src/connect
+    image: dockerx2000/connect_client
     env_file:
       - ./client/src/.env
-    volumes:
-      - ./client:/usr/src/connect
     ports:
       - "3000:3000"
     depends_on:

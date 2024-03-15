@@ -196,9 +196,11 @@ const SingleChat = () => {
 		if (socket.current === undefined) {
 			return;
 		}
-		if (e.target.value !== "" && !typing) {
-			setTyping(true);
-			socket.current.emit("typing", selectedChat._id);
+		if (e.target.value !== "") {
+			if (!typing) {
+				setTyping(true);
+				socket.current.emit("typing", selectedChat._id);
+			}
 		} else {
 			socket.current.emit("stop_typing", selectedChat._id);
 			setTyping(false);
