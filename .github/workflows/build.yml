@@ -24,9 +24,9 @@ jobs:
     REDIS_USERNAME: ${ { secrets.REDIS_USERNAME } }
 
   steps:
-    - name: git repo checkout
-      uses: actions/checkout@v4
-      
+    - name: pulling git repo
+      uses: actions/checkout@v3
+
     - name: installing nodejs 
       uses: actions/setup-node@v4
       with:
