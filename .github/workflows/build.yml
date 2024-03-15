@@ -26,7 +26,6 @@ jobs:
     steps:
       - name: pulling git repo
         uses: actions/checkout@v4
-        with:
   # steps:
   #   - name: pulling git repo
   #     uses: actions/checkout@v3
