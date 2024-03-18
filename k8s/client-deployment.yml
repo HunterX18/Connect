@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: connect-client
+  template:
+    metadata:
+      labels:
+        app: connect-client
+    spec:
+      containers:
+        - name: connect-client
+          image: dockerx2000/connect_client
+          env:
+            - name: REACT_APP_UPLOAD_PRESET
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: REACT_APP_UPLOAD_PRESET
+            - name: REACT_APP_CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: REACT_APP_CLOUD_NAME
+            - name: REACT_APP_CLOUDINARY_API
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: REACT_APP_CLOUDINARY_API
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-service
+spec:
+  selector:
+    app: connect-client
+  ports:
+    - name: connect-client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer

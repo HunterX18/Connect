@@ -4,8 +4,6 @@ services:
     container_name: server
     # build:
     #   context: ./server
-    # env_file:
-    #   - ./server/.env
     # volumes:
     #   - ./server:/usr/src/connect
     image: dockerx2000/connect_server
@@ -29,8 +27,6 @@ services:
       - "3000:3000"
     depends_on:
       - server
-    networks:
-      - connect
 
 networks:
   connect:

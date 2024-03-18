@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: connect-server
+  template:
+    metadata:
+      labels:
+        app: connect-server
+    spec:
+      containers:
+        - name: connect-server
+          image: dockerx2000/connect_server
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: MONGO_URI
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: JWT_SECRET
+            - name: KAFKA_BROKER
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: KAFKA_BROKER
+            - name: KAFKA_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: KAFKA_USERNAME
+            - name: KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: KAFKA_PASSWORD
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: REDIS_HOST
+            - name: REDIS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: REDIS_USERNAME
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: REDIS_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-service
+spec:
+  selector:
+    app: connect-server
+  ports:
+    - name: connect-server
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer
