@@ -27,19 +27,6 @@ jobs:
       - name: pulling git repo
         uses: actions/checkout@v4
 
-      - name: installing nodejs
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.10.0"
-
-      - name: install client
-        working-directory: ./client
-        run: npm install
-
-      - name: install server
-        working-directory: ./server
-        run: npm install
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -66,4 +53,12 @@ jobs:
           context: ./server
           push: true
           tags: dockerx2000/connect_server:latest
+          cache-to: type=local,dest=/tmp/.buildx-cache
+      
+      - name: Build and push nginx
+        uses: docker/build-push-action@v5
+        with:
+          context: ./nginx
+          push: true
+          tags: dockerx2000/connect_nginx:latest
           cache-to: type=local,dest=/tmp/.buildx-cache

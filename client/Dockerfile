@@ -1,4 +1,4 @@
-FROM node:21-alpine3.18
+FROM node:21-alpine3.18 as build
 
 WORKDIR /usr/src/connect
 
@@ -8,6 +8,11 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD [ "npm", "start" ]
+FROM nginx
+
+EXPOSE 3000 
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /usr/src/connect/build /usr/share/nginx/html
+

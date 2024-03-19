@@ -1,32 +1,47 @@
 version: "3"
 services:
-  server:
-    container_name: server
-    # build:
-    #   context: ./server
-    # volumes:
-    #   - ./server:/usr/src/connect
-    image: dockerx2000/connect_server
+  api:
+    container_name: api
+    hostname: api
+    build:
+      context: ./server
+    volumes:
+      - ./server:/usr/src/connect
+    # image: dockerx2000/connect_server
     env_file:
       - ./server/.env
     ports:
       - "5000:5000"
     networks:
       - connect
-
   client:
     container_name: client
-    # build:
-    #   context: ./client
-    # volumes:
-    #   - ./client:/usr/src/connect
-    image: dockerx2000/connect_client
+    hostname: client
+    build:
+      context: ./client
+    volumes:
+      - ./client:/usr/src/connect
+    # image: dockerx2000/connect_client
     env_file:
       - ./client/src/.env
     ports:
       - "3000:3000"
     depends_on:
-      - server
+      - api
+    networks:
+      - connect
+  nginx:
+    container_name: nginx
+    hostname: nginx
+    build:
+      context: ./nginx
+    ports:
+      - "3001:80"
+    depends_on:
+      - api
+      - client
+    networks:
+      - connect
 
 networks:
   connect:
